@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   name: lcw-app
   labels:
-    name: lcw-app
+    app: lcw-app
