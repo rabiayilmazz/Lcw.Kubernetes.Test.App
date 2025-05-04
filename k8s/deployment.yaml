@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: lcw-app
+spec:
+replicas: 1
+selector:
+    matchLabels:
+    app: lcw-app
+template:
+    metadata:
+    labels:
+        app: lcw-app
+    spec:
+    containers:
+    - name: lcw-app
+    image: swr.tr-west-1.myhuaweicloud.com/lcw/lcw:657473b3
+    imagePullSecrets:
+    - name: dockerconfig
+    ports:
+    - containerPort: 5000
+    readinessProbe:
+        httpGet:
+            path: /ping
+            port: 5000
+        initialDelaySeconds: 5
+        periodSeconds: 5
+        timeoutSeconds: 2
+        failureThreshold: 3
+    livenessProbe:
+        exec:
+            command:
+            - sh
+            - -c
+            - curl -f http://localhost:5000/ping || exit 1
+        initialDelaySeconds: 10
+        periodSeconds: 5
+        timeoutSeconds: 2
+        failureThreshold: 3
