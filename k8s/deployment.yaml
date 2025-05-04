@@ -16,8 +16,6 @@ spec:
       containers:
         - name: lcw-app
           image: swr.tr-west-1.myhuaweicloud.com/lcw/lcw:657473b3
-          imagePullSecrets:
-            - name: dockerconfig
           ports:
             - containerPort: 5000
           readinessProbe:
